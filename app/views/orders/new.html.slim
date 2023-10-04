@@ -1,15 +1,22 @@
 h1= t('views.order.create_new_order')
 
+- if flash[:notice].present?
+  .alert.alert-success.alert-dismissible.fade.show
+    = flash[:notice]
+    button.btn-close[type="button" data-bs-dismiss="alert" aria-label="Close"]
+
 = form_with model: @order do |f|
   - if @order.errors.any?
-    ul
-      - @order.errors.full_messages.each do |message|
-        li= message
+    .alert.alert-danger
+      ul
+        - @order.errors.full_messages.each do |message|
+          li= message
+  h3= t('.excluded_ingredients')
   .form-group
-    h3= t('.excluded_ingredients')
     = f.collection_check_boxes :ingredient_ids, @ingredients, :id, :name do |b|
       .form-check
         = b.check_box(class: 'form-check-input')
         = b.label(class: 'form-check-label') { b.object.name }
   .form-group
     = f.submit t('.create_order'), class: 'btn btn-primary'
+

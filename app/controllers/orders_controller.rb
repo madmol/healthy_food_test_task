@@ -1,21 +1,19 @@
 class OrdersController < ApplicationController
   def new
     @order = Order.new
-    @ingredients = Ingredient.all
+    @ingredients = Ingredient.order(name: :asc)
   end
 
   def create
-    order = Order.new(ingredients: excluded_ingredients)
-    if order.save
-      redirect_to root_path, notice: 'Заказ успешно создан!'
-    else
-      redirect_to root_path, alert: 'Не удалось создать заказ.'
-    end
+    order = Order.new(excluded_ingredients)
+
+    flash[:notice] = t('.notice') if order.save
+    redirect_to root_path
   end
 
   private
 
   def excluded_ingredients
-
+    params.require(:order).permit(ingredient_ids: [])
   end
 end
