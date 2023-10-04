@@ -1,16 +1,15 @@
-h1 Create a New Order
+h1= t('views.order.create_new_order')
 
 = form_with model: @order do |f|
   - if @order.errors.any?
     ul
       - @order.errors.full_messages.each do |message|
-        li = message
-  .field
-    = f.label :ingredients, 'Excluded Ingredients'
+        li= message
+  .form-group
+    h3= t('.excluded_ingredients')
     = f.collection_check_boxes :ingredient_ids, @ingredients, :id, :name do |b|
-      .span
-        = b.label(class: "check_box") do
-          = b.check_box class: "check_box" 
-          = b.object.name
-  .actions
-    = f.submit 'Create Order'
+      .form-check
+        = b.check_box(class: 'form-check-input')
+        = b.label(class: 'form-check-label') { b.object.name }
+  .form-group
+    = f.submit t('.create_order'), class: 'btn btn-primary'

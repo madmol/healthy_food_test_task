@@ -30,4 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  orders:
+    new:
+      create_new_order: "Create a New Order"
+      excluded_ingredients: "Choose excluded Ingredients"
+      create_order: "Create Order"
